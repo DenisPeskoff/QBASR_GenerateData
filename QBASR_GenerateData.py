@@ -17,17 +17,20 @@ def run(process_id):
 
     questions = data['questions']
 
-    #extract all the relevant questions for given fold
-    buzzer_data = []
+    guesser_data = []
     for question in data['questions']:
-        if question['fold'] == 'buzzertrain':
-            buzzer_data.append([question['sentences'], question['page'], question['qnum']])
+        # extract all the relevant questions for given fold
+        if question['fold'] == 'guessdev':
+            guesser_data.append([question['text'],  question['tokenizations'], question['page'], question['qanta_id']])
 
     #extract relevant information from format
     data = []
-    for index, sentences in enumerate([x[0] for x in buzzer_data]):
-        for sent_count, sentence in enumerate(sentences):
-            data.append([buzzer_data[index][2], sent_count, sentence, buzzer_data[index][1]])
+
+    #break up the question into individual sentences
+    for text, tokens, page, qnum in guesser_data:
+        for sent_count, token in enumerate(tokens):
+            data.append([qnum, sent_count, text[token[0]:token[1]], page])
+            #data.append([buzzer_data[index][3], sent_count, sentence, buzzer_data[index][1]])
 
     #convert all the data into speech and save it
     for sentence in data:
@@ -36,14 +39,14 @@ def run(process_id):
         # convert into audio with gTTS, save it to mp3, convert it to WAV
         try:
             sentTTS = gTTS(text, lang='en', slow=False)
-            sentTTS.save('/fs/clip-quiz/dpeskov/data/' + file_name + ".mp3")
+            sentTTS.save(f'/fs/clip-quiz/dpeskov/data/{file_name}.mp3")
 
         #sometimes the API might get overwhelmed, take a break then try again
         except:
             print("sleeping")
             time.sleep(3)
             sentTTS = gTTS(text, lang='en', slow=False)
-            sentTTS.save('/fs/clip-quiz/dpeskov/data/' + file_name + ".mp3")
+            sentTTS.save(f'/fs/clip-quiz/dpeskov/data/{file_name}.mp3")
 
 
 if __name__ == "__main__":
