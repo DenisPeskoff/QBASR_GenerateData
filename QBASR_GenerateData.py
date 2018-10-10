@@ -43,7 +43,7 @@ def run(process_id):
             print("sleeping")
             time.sleep(3)
             sentTTS = gTTS(text, lang='en', slow=False)
-            sentTTS.save('/fs/clip-quiz/dpeskov/guesser_mp3/' + file_name + ".mp3")
+            sentTTS.save('/fs/clip-quiz/dpeskov/data/' + file_name + ".mp3")
 
 
 if __name__ == "__main__":
