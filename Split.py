@@ -6,9 +6,9 @@ def split(input_file, output_dir, total_chunks=2):
     with open(input_file, 'r') as fp:
         data = json.load(fp)
         questions = data['questions']
-        max_i = len(questions)/total_chunks
+        max_i = int(len(questions)/total_chunks)
         print(max_i)
-        file_chunk, i = 0, 0
+        file_chunk, i = 1, 0
         temp_store = []
         for line in questions:
             i+=1
@@ -24,9 +24,8 @@ def split(input_file, output_dir, total_chunks=2):
 
         # last chunk is slightly smaller
         if temp_store:
-            with open(os.path.join(output_dir, 'chunk{file_chunk}.json'), 'w') as o:
-                for line in temp_store:
-                    o.write(line)
+            with open(os.path.join(output_dir, 'chunk{file_chunk}.json'.format(file_chunk=file_chunk)), 'w') as o:
+                json.dump({"questions":temp_store}, o)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

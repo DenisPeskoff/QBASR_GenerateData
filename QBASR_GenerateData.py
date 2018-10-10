@@ -12,7 +12,7 @@ import sys
 def run(process_id):
 
     #load all relevant data for the chunk
-    with open(f'chunk{process_id}.json') as fp:
+    with open(f'output_dir/chunk{process_id}.json') as fp:
         data = json.load(fp)
 
     questions = data['questions']
