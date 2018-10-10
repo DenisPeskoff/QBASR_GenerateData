@@ -20,7 +20,7 @@ def run(process_id):
     #extract all the relevant questions for given fold
     buzzer_data = []
     for question in data['questions']:
-        if question['fold'] == 'guesstrain':
+        if question['fold'] == 'buzzertrain':
             buzzer_data.append([question['sentences'], question['page'], question['qnum']])
 
     #extract relevant information from format
@@ -36,7 +36,7 @@ def run(process_id):
         # convert into audio with gTTS, save it to mp3, convert it to WAV
         try:
             sentTTS = gTTS(text, lang='en', slow=False)
-            sentTTS.save('/fs/clip-quiz/dpeskov/guesser_mp3/' + file_name + ".mp3")
+            sentTTS.save('/fs/clip-quiz/dpeskov/data/' + file_name + ".mp3")
 
         #sometimes the API might get overwhelmed, take a break then try again
         except:
@@ -57,4 +57,4 @@ if __name__ == "__main__":
     #     print('Invalid process id')
     #     sys.exit(0)
 
-    run(args.process_id, args.total_processes)
+    run(args.process_id)
