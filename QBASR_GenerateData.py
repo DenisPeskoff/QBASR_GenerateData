@@ -39,14 +39,14 @@ def run(process_id):
         # convert into audio with gTTS, save it to mp3, convert it to WAV
         try:
             sentTTS = gTTS(text, lang='en', slow=False)
-            sentTTS.save(f'/fs/clip-quiz/dpeskov/data/{file_name}.mp3')
+            sentTTS.save(f'/fs/clip-quiz/dpeskov/data/dev/{file_name}.mp3')
 
         #sometimes the API might get overwhelmed, take a break then try again
         except:
             print("sleeping")
             time.sleep(3)
             sentTTS = gTTS(text, lang='en', slow=False)
-            sentTTS.save(f'/fs/clip-quiz/dpeskov/data/{file_name}.mp3')
+            sentTTS.save(f'/fs/clip-quiz/dpeskov/data/dev/{file_name}.mp3')
 
 
 if __name__ == "__main__":

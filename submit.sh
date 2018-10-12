@@ -1,7 +1,7 @@
 mkdir output_dir
 mkdir submissions
 
-python Split.py -t $1 -i data.json -o output_dir/
+python Split.py -t $1 -i qanta.dev.2018.04.18.json -o output_dir/
 
 for i in $(seq $1) 
 do
