@@ -5,8 +5,11 @@ The following document allows you to Slurm documents.  There are two parts.
 ## Part 1: Audio Generation
 This includes submit.sh, template.sh, QBASR_GenerateData.py
 1)Add file in proper json format from https://sites.google.com/view/qanta/datasets?authuser=0
+
 2)Update QBASR_GenerateData to save in the right place
+
 3)Update template.sh to refer to the proper anaconda path, file, etc.
+
 4)Run "submit.sh 48" (or appropriate amount of partitions)
 
 ## Part 2: Decoding
