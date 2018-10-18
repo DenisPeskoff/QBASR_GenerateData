@@ -9,12 +9,11 @@ def generate_filelist(folder_path):
     file_list = []
     for each_file in (glob.glob(folder_path)):
         file_list.append(each_file)
-
-    file_list = file_list.sort(key=lambda file: int(file[file.rfind('/') + 1:file.rfind('_')]))
-
+    file_list.sort(key=lambda file: int(file[file.rfind('/') + 1:file.rfind('_')]))
+    
     with open('ASR_FileList', 'w') as f:
         for each_file in file_list:
-            f.write(each_file)
+            f.write(each_file+'\n')
 
 
 if __name__ == "__main__":

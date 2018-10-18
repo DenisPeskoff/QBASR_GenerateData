@@ -1,32 +1,40 @@
 import argparse
 import os
-import json
 import math
 
 def split(input_file, output_dir, total_chunks=2):
     with open(input_file, 'r') as fp:
-        data = json.load(fp)
-        questions = data['questions']
-        max_i = math.ceil(len(questions)/total_chunks)
-        print(max_i)
+        data = fp.readlines()
+        max_i = math.ceil(len(data)/total_chunks)
+        #if len(data)%total_chunks != 0:
+        #     lower_flag = True
+        #else:
+        #     lower_flag = False
+
+
+        print("Splitting into sections of ", max_i)
         file_chunk, i = 1, 0
         temp_store = []
-        for line in questions:
+        for line in data:
             i+=1
             temp_store.append(line)
             #reset if new chunk is needed
             if i == max_i:
                 i = 0
-                with open(os.path.join(output_dir, f'chunk{file_chunk}.json'), 'w') as o:
+                with open(os.path.join(output_dir, f'chunk{file_chunk}'), 'w') as o:
                     #for line in temp_store:
-                    json.dump({"questions":temp_store}, o)
-                temp_store = []
-                file_chunk += 1
+                    o.write("".join(temp_store))  
 
+                temp_store = []
+                #halfway through lower the ceiling by 1 for equally spaced data
+                #if file_chunk >= (total_chunks/2) and lower_flag:
+                #    max_i = max_i-1
+                #    lower_flag = False
+                file_chunk += 1
         # last chunk is slightly smaller
         if temp_store:
-            with open(os.path.join(output_dir, 'chunk{file_chunk}.json'.format(file_chunk=file_chunk)), 'w') as o:
-                json.dump({"questions":temp_store}, o)
+             with open(os.path.join(output_dir, 'chunk{file_chunk}'.format(file_chunk=file_chunk)), 'w') as o:
+                o.write("".join(temp_store))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
